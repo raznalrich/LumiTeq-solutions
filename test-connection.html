@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supabase Connection Test</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #0a0c10;
+  color: #e8eaf0;
+}
+.card {
+  background: #141720;
+  border: 1px solid #272d3e;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+h1 { color: #00d4ff; margin-bottom: 10px; }
+h2 { color: #00d4ff; font-size: 1.2rem; margin-bottom: 15px; }
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  background: #0f1219;
+  border: 1px solid #272d3e;
+  border-radius: 8px;
+  color: #e8eaf0;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-family: monospace;
+}
+button {
+  background: #00d4ff;
+  color: #0a0c10;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+button:hover { background: #00b8de; }
+.result {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.success { background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; color: #22c55e; }
+.error { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; }
+.info { background: rgba(0, 212, 255, 0.1); border: 1px solid #00d4ff; color: #00d4ff; }
+.step { color: #8890a6; margin-bottom: 8px; line-height: 1.6; }
+code { background: #1a1e28; padding: 2px 6px; border-radius: 4px; color: #00d4ff; }
+ol { margin-left: 20px; color: #8890a6; }
+ol li { margin-bottom: 12px; line-height: 1.6; }
+.warning { background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; color: #f59e0b; padding: 12px; border-radius: 8px; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<h1>🔧 Supabase Connection Test</h1>
+
+<div class="warning">
+  ⚠️ <strong>Important:</strong> The API key format provided earlier is incorrect. Please get your actual API key from Supabase dashboard following the steps below.
+</div>
+
+<div class="card">
+  <h2>📋 Step 1: Get Your Correct API Keys</h2>
+  <div class="step">
+    <ol>
+      <li>Go to your Supabase project dashboard: 
+        <a href="https://supabase.com/dashboard/project/neriwbcpducpkwmpfieb/settings/api" target="_blank" style="color: #00d4ff;">
+          Open Settings
+        </a>
+      </li>
+      <li>Click on <code>Settings</code> (gear icon) in the left sidebar</li>
+      <li>Click on <code>API</code></li>
+      <li>You'll see two keys:
+        <ul style="margin-top: 8px;">
+          <li><strong>Project URL</strong> - Should be: <code>https://neriwbcpducpkwmpfieb.supabase.co</code></li>
+          <li><strong>anon/public key</strong> - A long JWT token starting with <code>eyJ...</code></li>
+        </ul>
+      </li>
+      <li>Copy the <strong>anon public</strong> key (NOT the service_role key!)</li>
+    </ol>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🧪 Step 2: Test Your Connection</h2>
+  <label style="display: block; margin-bottom: 8px; color: #8890a6; font-size: 14px;">
+    <strong>Supabase URL:</strong>
+  </label>
+  <input type="text" id="testUrl" value="https://neriwbcpducpkwmpfieb.supabase.co" placeholder="https://your-project.supabase.co">
+  
+  <label style="display: block; margin-bottom: 8px; margin-top: 15px; color: #8890a6; font-size: 14px;">
+    <strong>Anon/Public API Key:</strong>
+  </label>
+  <textarea id="testKey" rows="4" placeholder="Paste your anon public key here (starts with eyJ...)"></textarea>
+  
+  <button onclick="testConnection()">Test Connection</button>
+  <div id="testResult"></div>
+</div>
+
+<div class="card">
+  <h2>✅ Step 3: Update Your Files</h2>
+  <div class="step">
+    Once the test above is successful, update these files with your correct API key:
+    <ol style="margin-top: 12px;">
+      <li>Open <code>supabase-config.js</code></li>
+      <li>Replace <code>SUPABASE_ANON_KEY</code> value with your real key</li>
+      <li>Open <code>admin.html</code></li>
+      <li>Find <code>const SUPABASE_KEY</code> and replace with your real key</li>
+      <li>Save both files</li>
+    </ol>
+  </div>
+</div>
+
+<div class="card" style="display:none;" id="updateSection">
+  <h2>📝 Copy These Updated Values</h2>
+  <div class="step">Copy and paste these into your files:</div>
+  
+  <label style="display: block; margin: 12px 0 8px; color: #8890a6; font-size: 14px;">
+    <strong>For supabase-config.js:</strong>
+  </label>
+  <textarea id="configCode" rows="3" readonly style="background: #0a0c10;"></textarea>
+  
+  <label style="display: block; margin: 12px 0 8px; color: #8890a6; font-size: 14px;">
+    <strong>For admin.html (find SUPABASE_KEY):</strong>
+  </label>
+  <textarea id="adminCode" rows="2" readonly style="background: #0a0c10;"></textarea>
+</div>
+
+<script>
+async function testConnection() {
+  const resultDiv = document.getElementById('testResult');
+  const updateSection = document.getElementById('updateSection');
+  const url = document.getElementById('testUrl').value.trim();
+  const key = document.getElementById('testKey').value.trim();
+  
+  resultDiv.innerHTML = '<div class="result info">Testing connection...</div>';
+  updateSection.style.display = 'none';
+  
+  if (!url || !key) {
+    resultDiv.innerHTML = '<div class="result error">❌ Please fill in both URL and API Key</div>';
+    return;
+  }
+  
+  if (!key.startsWith('eyJ')) {
+    resultDiv.innerHTML = '<div class="result error">❌ Invalid API Key Format!\n\nYour key should start with "eyJ" (it\'s a JWT token).\n\nThe key you provided doesn\'t match this format.\n\nPlease get the correct "anon public" key from Supabase Settings > API.</div>';
+    return;
+  }
+  
+  try {
+    // Test connection
+    const supabaseClient = supabase.createClient(url, key);
+    
+    resultDiv.innerHTML = '<div class="result info">🔄 Testing database connection...</div>';
+    
+    // Try to query projects table
+    const { data, error } = await supabaseClient
+      .from('projects')
+      .select('count')
+      .limit(1);
+    
+    if (error) {
+      if (error.message.includes('relation "public.projects" does not exist')) {
+        resultDiv.innerHTML = `<div class="result error">❌ Connection works but 'projects' table doesn't exist!
+
+Please run the setup-database.sql script in Supabase SQL Editor:
+1. Go to SQL Editor in Supabase
+2. Copy all content from setup-database.sql
+3. Paste and click "Run"
+
+Error: ${error.message}</div>`;
+      } else {
+        resultDiv.innerHTML = `<div class="result error">❌ Database Error: ${error.message}</div>`;
+      }
+      return;
+    }
+    
+    // Success!
+    resultDiv.innerHTML = `<div class="result success">✅ SUCCESS! Connection is working!
+
+Your credentials are correct and the database is accessible.
+
+Now update your files with the values below. ↓</div>`;
+    
+    // Show update section with code
+    updateSection.style.display = 'block';
+    document.getElementById('configCode').value = `const SUPABASE_URL = '${url}';\nconst SUPABASE_ANON_KEY = '${key}';`;
+    document.getElementById('adminCode').value = `const SUPABASE_URL = '${url}';\nconst SUPABASE_KEY = '${key}';`;
+    
+  } catch (err) {
+    resultDiv.innerHTML = `<div class="result error">❌ Connection Failed!
+
+Error: ${err.message}
+
+Check:
+1. URL is correct (no extra spaces)
+2. API key is the "anon public" key (not service_role)
+3. You copied the entire key</div>`;
+  }
+}
+
+// Auto-fill if there's a key in URL params (for testing)
+const params = new URLSearchParams(window.location.search);
+if (params.get('key')) {
+  document.getElementById('testKey').value = params.get('key');
+}
+</script>
+
+</body>
+</html>

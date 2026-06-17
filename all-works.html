@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Projects — LumiTeQ Solutions</title>
+<meta name="description" content="Browse all projects from LumiTeQ Solutions — Architectural solutions for technology.">
+
+<!-- Preconnect -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js" defer></script>
+
+<style>
+/* ══════════════════════════════════════════════
+   ART DIRECTION: LumiTeQ Solutions
+   Tone: Precise, architectural, luminous
+   Palette: Deep navy/charcoal surfaces + electric cyan accent
+   Typography: Cabinet Grotesk (display) + Satoshi (body)
+   Density: Spacious, editorial rhythm
+   ══════════════════════════════════════════════ */
+
+:root {
+  --text-xs:   clamp(0.75rem,  0.7rem + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem,     1.2rem + 2.5vw, 3.5rem);
+  --text-3xl:  clamp(2.5rem,   1rem + 4vw, 5rem);
+  --text-hero: clamp(3rem,     0.5rem + 7vw, 8rem);
+
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+  --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
+  --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
+  --space-16: 4rem; --space-20: 5rem; --space-24: 6rem;
+  --space-32: 8rem;
+
+  --radius-sm: 0.25rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
+  --radius-xl: 1rem; --radius-2xl: 1.5rem; --radius-full: 9999px;
+
+  --transition-fast: 140ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-interactive: 220ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  --font-display: 'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+  --font-body: 'Satoshi', 'Inter', sans-serif;
+
+  --content-narrow: 640px;
+  --content-default: 960px;
+  --content-wide: 1280px;
+}
+
+/* ── DARK THEME (default) ── */
+:root, [data-theme="dark"] {
+  --color-bg:             #0a0c10;
+  --color-surface:        #0f1219;
+  --color-surface-2:      #141720;
+  --color-surface-offset: #1a1e28;
+  --color-surface-dynamic:#232839;
+  --color-divider:        #1f2433;
+  --color-border:         #272d3e;
+
+  --color-text:           #e8eaf0;
+  --color-text-muted:     #8890a6;
+  --color-text-faint:     #4a5168;
+  --color-text-inverse:   #0a0c10;
+
+  --color-primary:        #00d4ff;
+  --color-primary-hover:  #00b8de;
+  --color-primary-active: #0099bb;
+  --color-primary-highlight: #0d2535;
+  --color-primary-glow:   rgba(0, 212, 255, 0.15);
+
+  --color-accent2:        #7c3aed;
+  --color-accent2-hover:  #6d28d9;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.6);
+  --shadow-glow: 0 0 40px rgba(0, 212, 255, 0.1);
+}
+
+/* ── LIGHT THEME ── */
+[data-theme="light"] {
+  --color-bg:             #f4f6fc;
+  --color-surface:        #ffffff;
+  --color-surface-2:      #f8f9ff;
+  --color-surface-offset: #eef0f8;
+  --color-surface-dynamic:#e4e8f4;
+  --color-divider:        #dde1ef;
+  --color-border:         #d0d5e8;
+
+  --color-text:           #0f1219;
+  --color-text-muted:     #4a5270;
+  --color-text-faint:     #8890a6;
+  --color-text-inverse:   #ffffff;
+
+  --color-primary:        #006fa8;
+  --color-primary-hover:  #005a8a;
+  --color-primary-active: #00446b;
+  --color-primary-highlight: #ddeef8;
+  --color-primary-glow:   rgba(0, 111, 168, 0.08);
+
+  --color-accent2:        #7c3aed;
+  --color-accent2-hover:  #6d28d9;
+
+  --shadow-sm: 0 1px 3px rgba(15,18,25,0.08);
+  --shadow-md: 0 4px 16px rgba(15,18,25,0.1);
+  --shadow-lg: 0 12px 40px rgba(15,18,25,0.14);
+  --shadow-glow: 0 0 40px rgba(0, 111, 168, 0.08);
+}
+
+/* ── BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+body {
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+img, svg { display: block; max-width: 100%; }
+ul[role="list"] { list-style: none; }
+a, button, [role="button"] {
+  transition: color var(--transition-fast), background var(--transition-fast),
+              box-shadow var(--transition-fast), opacity var(--transition-fast),
+              border-color var(--transition-fast);
+}
+button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
+h1,h2,h3,h4,h5,h6 { text-wrap: balance; line-height: 1.15; }
+p, li { text-wrap: pretty; }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ══════════════════════════════════════════════
+   LAYOUT UTILITIES
+   ══════════════════════════════════════════════ */
+.container {
+  max-width: var(--content-wide);
+  margin-inline: auto;
+  padding-inline: clamp(var(--space-4), 4vw, var(--space-12));
+}
+
+section { padding-block: clamp(var(--space-16), 8vw, var(--space-32)); }
+
+/* ══════════════════════════════════════════════
+   NAVIGATION
+   ══════════════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: var(--space-4) 0;
+  background: color-mix(in oklch, var(--color-bg) 95%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--color-border);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--content-wide);
+  margin-inline: auto;
+  padding-inline: clamp(var(--space-4), 4vw, var(--space-12));
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: var(--color-text);
+}
+.nav-logo-icon {
+  width: 36px; height: 36px;
+  flex-shrink: 0;
+}
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.nav-logo-name {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  line-height: 1.1;
+}
+.nav-logo-tagline {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  list-style: none;
+}
+.nav-links a {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.nav-links a:hover { color: var(--color-text); }
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+}
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  box-shadow: 0 0 20px var(--color-primary-glow);
+}
+.btn-ghost {
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+  background: transparent;
+}
+.btn-ghost:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+  background: var(--color-surface-offset);
+}
+.theme-toggle {
+  width: 36px; height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+.theme-toggle:hover { color: var(--color-text); background: var(--color-surface-offset); }
+
+/* ══════════════════════════════════════════════
+   PAGE HEADER
+   ══════════════════════════════════════════════ */
+.page-header {
+  padding-top: calc(var(--space-24) + 80px);
+  padding-bottom: var(--space-16);
+  text-align: center;
+}
+.page-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+.page-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+}
+.page-desc {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+/* ══════════════════════════════════════════════
+   PROJECTS
+   ══════════════════════════════════════════════ */
+.projects-section {
+  padding-top: 0;
+}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: var(--space-6);
+}
+.project-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: box-shadow var(--transition-interactive), transform var(--transition-interactive);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.project-card:hover { 
+  box-shadow: var(--shadow-lg); 
+  transform: translateY(-4px); 
+}
+.project-thumb {
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+}
+.project-thumb-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+.project-thumb--retail {
+  background: linear-gradient(135deg,
+    color-mix(in oklch, var(--color-primary) 20%, var(--color-surface-offset)),
+    color-mix(in oklch, var(--color-accent2) 15%, var(--color-surface-offset))
+  );
+}
+.project-thumb--ecom {
+  background: linear-gradient(135deg,
+    color-mix(in oklch, #22c55e 15%, var(--color-surface-offset)),
+    color-mix(in oklch, var(--color-primary) 12%, var(--color-surface-offset))
+  );
+}
+.project-thumb--report {
+  background: linear-gradient(135deg,
+    color-mix(in oklch, #f59e0b 15%, var(--color-surface-offset)),
+    color-mix(in oklch, #ef4444 10%, var(--color-surface-offset))
+  );
+}
+.project-thumb--pos {
+  background: linear-gradient(135deg,
+    color-mix(in oklch, var(--color-accent2) 18%, var(--color-surface-offset)),
+    color-mix(in oklch, var(--color-primary) 10%, var(--color-surface-offset))
+  );
+}
+.project-thumb--inventory {
+  background: linear-gradient(135deg,
+    color-mix(in oklch, #8b5cf6 20%, var(--color-surface-offset)),
+    color-mix(in oklch, #06b6d4 15%, var(--color-surface-offset))
+  );
+}
+.project-thumb--crm {
+  background: linear-gradient(135deg,
+    color-mix(in oklch, #ec4899 18%, var(--color-surface-offset)),
+    color-mix(in oklch, #f97316 12%, var(--color-surface-offset))
+  );
+}
+.project-thumb--analytics {
+  background: linear-gradient(135deg,
+    color-mix(in oklch, #3b82f6 20%, var(--color-surface-offset)),
+    color-mix(in oklch, #10b981 15%, var(--color-surface-offset))
+  );
+}
+.project-thumb--mobile {
+  background: linear-gradient(135deg,
+    color-mix(in oklch, #14b8a6 18%, var(--color-surface-offset)),
+    color-mix(in oklch, #6366f1 15%, var(--color-surface-offset))
+  );
+}
+.project-body { 
+  padding: var(--space-6); 
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.project-tags { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: var(--space-2); 
+  margin-bottom: var(--space-3); 
+}
+.project-tag {
+  padding: 2px var(--space-2);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+.project-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  letter-spacing: -0.01em;
+}
+.project-desc { 
+  font-size: var(--text-sm); 
+  color: var(--color-text-muted); 
+  line-height: 1.65;
+  flex: 1;
+}
+.project-arrow {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 32px; height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-dynamic);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+.project-card:hover .project-arrow { opacity: 1; }
+
+/* ══════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════ */
+footer {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-divider);
+  padding-block: var(--space-12);
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+.footer-logo { display: flex; align-items: center; gap: var(--space-3); text-decoration: none; }
+.footer-logo-name {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+.footer-logo-tagline { font-size: var(--text-xs); color: var(--color-text-muted); }
+.footer-links { display: flex; gap: var(--space-6); }
+.footer-links a { font-size: var(--text-sm); color: var(--color-text-muted); text-decoration: none; }
+.footer-links a:hover { color: var(--color-text); }
+.footer-copy { font-size: var(--text-xs); color: var(--color-text-faint); }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .projects-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAVIGATION ═══════════ -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="lumiteq-solutions.html" class="nav-logo" aria-label="LumiTeQ Solutions Home">
+      <svg class="nav-logo-icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <rect width="36" height="36" rx="9" fill="currentColor" style="color:var(--color-primary-highlight)"/>
+        <path d="M10 8 L10 26 L24 26" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M14 14 L28 8" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <circle cx="28" cy="8" r="2.5" fill="var(--color-primary)"/>
+        <circle cx="10" cy="8" r="2.5" fill="var(--color-primary)"/>
+      </svg>
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">LumiTeQ</span>
+        <span class="nav-logo-tagline">Solutions</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="lumiteq-solutions.html#about">About</a></li>
+      <li><a href="lumiteq-solutions.html#vision">Vision &amp; Mission</a></li>
+      <li><a href="lumiteq-solutions.html#services">Services</a></li>
+      <li><a href="lumiteq-solutions.html#projects">Projects</a></li>
+      <li><a href="lumiteq-solutions.html#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      <a href="lumiteq-solutions.html#contact" class="btn btn-primary">Get In Touch</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════ PAGE HEADER ═══════════ -->
+<header class="page-header">
+  <div class="container">
+    <p class="page-label">Portfolio</p>
+    <h1 class="page-title">All Projects</h1>
+    <p class="page-desc">A comprehensive showcase of our work across retail, e-commerce, enterprise systems, and custom software solutions.</p>
+  </div>
+</header>
+
+<!-- ═══════════ ALL PROJECTS ═══════════ -->
+<section class="projects-section">
+  <div class="container">
+    <div class="projects-grid" id="allProjectsGrid">
+      <!-- Projects will be loaded dynamically from Supabase -->
+      <div class="project-card" style="display:none;">
+        <div class="project-thumb project-thumb--retail" aria-hidden="true">
+          <div class="project-thumb-inner">🏪</div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">C# / .NET</span>
+            <span class="project-tag">SQL Server</span>
+            <span class="project-tag">Angular</span>
+            <span class="project-tag">POS</span>
+          </div>
+          <h3 class="project-name">WorldSmart Retail Management Platform</h3>
+          <p class="project-desc">A comprehensive multi-store retail management system handling inventory, billing, customer loyalty, purchase orders, and advanced sales reporting across distributed retail chains.</p>
+        </div>
+        <div class="project-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Project 2: AUR E-Commerce -->
+      <div class="project-card">
+        <div class="project-thumb project-thumb--ecom" aria-hidden="true">
+          <div class="project-thumb-inner">🛒</div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">Angular</span>
+            <span class="project-tag">Firebase</span>
+            <span class="project-tag">E-Commerce</span>
+          </div>
+          <h3 class="project-name">AUR E-Commerce Platform</h3>
+          <p class="project-desc">Full-featured online storefront with product customization (neon/lighting), cart management, order tracking, and CPanel deployment pipeline.</p>
+        </div>
+        <div class="project-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Project 3: Enterprise Reporting Suite -->
+      <div class="project-card">
+        <div class="project-thumb project-thumb--report" aria-hidden="true">
+          <div class="project-thumb-inner">📊</div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">Stimulsoft</span>
+            <span class="project-tag">SQL Server</span>
+            <span class="project-tag">C#</span>
+          </div>
+          <h3 class="project-name">Enterprise Reporting Suite</h3>
+          <p class="project-desc">Multi-format report generation system covering sales analytics, inventory summaries, financial statements, and custom KPI dashboards with CSV/PDF export.</p>
+        </div>
+        <div class="project-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Project 4: POS Terminal Interface -->
+      <div class="project-card">
+        <div class="project-thumb project-thumb--pos" aria-hidden="true">
+          <div class="project-thumb-inner">💳</div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">Angular</span>
+            <span class="project-tag">C#</span>
+            <span class="project-tag">REST API</span>
+          </div>
+          <h3 class="project-name">POS Terminal Interface</h3>
+          <p class="project-desc">High-performance point-of-sale terminal with barcode scanning, split-payment processing, real-time stock deduction, and offline-first architecture for retail environments.</p>
+        </div>
+        <div class="project-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Project 5: Inventory Management System -->
+      <div class="project-card">
+        <div class="project-thumb project-thumb--inventory" aria-hidden="true">
+          <div class="project-thumb-inner">📦</div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">C#</span>
+            <span class="project-tag">SQL Server</span>
+            <span class="project-tag">WPF</span>
+          </div>
+          <h3 class="project-name">Warehouse Inventory System</h3>
+          <p class="project-desc">Real-time stock tracking, warehouse management, purchase order workflows, and replenishment alerts — keeping operations running without blind spots.</p>
+        </div>
+        <div class="project-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Project 6: Customer Loyalty Platform -->
+      <div class="project-card">
+        <div class="project-thumb project-thumb--crm" aria-hidden="true">
+          <div class="project-thumb-inner">⭐</div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">C#</span>
+            <span class="project-tag">Angular</span>
+            <span class="project-tag">Redis</span>
+          </div>
+          <h3 class="project-name">Customer Loyalty & CRM</h3>
+          <p class="project-desc">Points-based loyalty system with tiered rewards, customer profile management, targeted promotions, and integrated communication workflows for retail chains.</p>
+        </div>
+        <div class="project-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Project 7: Business Analytics Dashboard -->
+      <div class="project-card">
+        <div class="project-thumb project-thumb--analytics" aria-hidden="true">
+          <div class="project-thumb-inner">📈</div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">Power BI</span>
+            <span class="project-tag">SQL</span>
+            <span class="project-tag">Python</span>
+          </div>
+          <h3 class="project-name">Business Intelligence Dashboard</h3>
+          <p class="project-desc">Real-time analytics platform aggregating sales trends, inventory metrics, customer behavior, and financial performance with customizable KPI widgets and drill-down reports.</p>
+        </div>
+        <div class="project-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Project 8: Mobile Sales App -->
+      <div class="project-card">
+        <div class="project-thumb project-thumb--mobile" aria-hidden="true">
+          <div class="project-thumb-inner">📱</div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag">Flutter</span>
+            <span class="project-tag">REST API</span>
+            <span class="project-tag">SQLite</span>
+          </div>
+          <h3 class="project-name">Mobile Sales Force Application</h3>
+          <p class="project-desc">Field sales app enabling offline order capture, inventory lookup, customer management, and route optimization with real-time sync to central ERP systems.</p>
+        </div>
+        <div class="project-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="lumiteq-solutions.html" class="footer-logo" aria-label="LumiTeQ Solutions">
+        <div>
+          <div class="footer-logo-name">LumiTeQ Solutions</div>
+          <div class="footer-logo-tagline">Architectural solutions for technology</div>
+        </div>
+      </a>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="lumiteq-solutions.html#about">About</a>
+        <a href="lumiteq-solutions.html#services">Services</a>
+        <a href="lumiteq-solutions.html#projects">Projects</a>
+        <a href="lumiteq-solutions.html#contact">Contact</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 LumiTeQ Solutions. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ═══════════ THEME TOGGLE ═══════════
+const themeToggle = document.querySelector('[data-theme-toggle]');
+const html = document.documentElement;
+
+// Load saved theme or default to 'dark'
+const savedTheme = localStorage.getItem('theme') || 'dark';
+html.setAttribute('data-theme', savedTheme);
+
+themeToggle?.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+});
+
+// ═══════════ LOAD ALL PROJECTS ═══════════
+async function loadAllProjects() {
+  const projectsGrid = document.getElementById('allProjectsGrid');
+  if (!projectsGrid) return;
+  
+  // Show loading state
+  projectsGrid.innerHTML = '<p style="text-align: center; padding: 4rem; color: var(--color-text-muted); grid-column: 1/-1;">Loading projects...</p>';
+  
+  try {
+    const projects = await fetchProjects();
+    
+    if (projects.length === 0) {
+      projectsGrid.innerHTML = '<p style="text-align: center; padding: 4rem; color: var(--color-text-muted); grid-column: 1/-1;">No projects available yet.</p>';
+      return;
+    }
+    
+    projectsGrid.innerHTML = '';
+    
+    projects.forEach((project, index) => {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      
+      card.innerHTML = `
+        <div class="project-thumb project-thumb--${project.theme}" aria-hidden="true">
+           <img 
+    src="${project.image_url}" 
+    alt="${project.name}" 
+    width="600" 
+    height="338" 
+    loading="lazy"
+    decoding="async"
+    style="width:100%; height:100%; object-fit:cover; display:block;"
+  />
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+          </div>
+          <h3 class="project-name">${project.name}</h3>
+          <p class="project-desc">${project.description}</p>
+        </div>
+        <div class="project-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/>
+          </svg>
+        </div>
+      `;
+      
+      projectsGrid.appendChild(card);
+    });
+    
+  } catch (error) {
+    console.error('Error loading projects:', error);
+    projectsGrid.innerHTML = '<p style="text-align: center; padding: 4rem; color: var(--color-danger, #ef4444); grid-column: 1/-1;">Error loading projects. Please try again later.</p>';
+  }
+}
+
+// Load projects when page loads
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadAllProjects);
+} else {
+  loadAllProjects();
+}
+</script>
+
+</body>
+</html>
